@@ -4,7 +4,7 @@ resource "random_password" "db_password" {
 }
 
 resource "aws_secretsmanager_secret" "db_secret" {
-  name = "mysql-rds-password" 
+  name = "mysql-rds-password"
 }
 
 resource "aws_secretsmanager_secret_version" "db_secret_version" {
