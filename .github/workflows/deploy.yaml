@@ -26,7 +26,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::174607920130:role/LabRole
+          role-to-assume: arn:aws:iam::174607920130:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS
           aws-region: us-east-1
 
       - name: Terraform Init
