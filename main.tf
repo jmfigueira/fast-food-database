@@ -66,14 +66,14 @@ resource "random_password" "db_password" {
   special = false
 }
 
-resource "aws_secretsmanager_secret" "db_secret" {
-  name = "mysql-rds-password"
-}
+# resource "aws_secretsmanager_secret" "db_secret" {
+#   name = "mysql-rds-password"
+# }
 
-resource "aws_secretsmanager_secret_version" "db_secret_version" {
-  secret_id     = aws_secretsmanager_secret.db_secret.id
-  secret_string = random_password.db_password.result
-}
+# resource "aws_secretsmanager_secret_version" "db_secret_version" {
+#   secret_id     = aws_secretsmanager_secret.db_secret.id
+#   secret_string = random_password.db_password.result
+# }
 
 resource "aws_db_instance" "mysql" {
   identifier             = "fiap-mysql-db"
@@ -96,4 +96,8 @@ resource "aws_db_instance" "mysql" {
 
 output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
+}
+
+output "rds_password" {
+  value = random_password.db_password.result
 }
