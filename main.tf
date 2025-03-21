@@ -42,20 +42,6 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"]
 }
 
-resource "random_password" "db_password" {
-  length  = 16
-  special = false
-}
-
-resource "aws_secretsmanager_secret" "db_secret" {
-  name = "mysql-rds-password"
-}
-
-resource "aws_secretsmanager_secret_version" "db_secret_version" {
-  secret_id     = aws_secretsmanager_secret.db_secret.id
-  secret_string = random_password.db_password.result
-}
-
 resource "aws_security_group" "rds-sg" {
   name = "${random_pet.sg.id}-rds-sg"
 
@@ -72,6 +58,21 @@ resource "aws_security_group" "rds-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+
+resource "random_password" "db_password" {
+  length  = 16
+  special = false
+}
+
+resource "aws_secretsmanager_secret" "db_secret" {
+  name = "mysql-rds-password"
+}
+
+resource "aws_secretsmanager_secret_version" "db_secret_version" {
+  secret_id     = aws_secretsmanager_secret.db_secret.id
+  secret_string = random_password.db_password.result
 }
 
 resource "aws_db_instance" "mysql" {
